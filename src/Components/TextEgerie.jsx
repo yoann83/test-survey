@@ -5,7 +5,7 @@ import Fade from "@mui/material/Fade";
 import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 
-export default function ({ helpTitle, helpText, ...props }) {
+export default function ({ helpTitle, helpText, icon, onChange, ...props }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState();
@@ -14,23 +14,36 @@ export default function ({ helpTitle, helpText, ...props }) {
     setOpen((prev) => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
   };
+  const [value, setValue] = useState(props.defaultValue);
+  const onSelectChange = (e) => {
+    setValue(e.target.value);
+    onChange(e.target.value);
+  };
   return (
     /* construct (overloard) all components (ex : material ui) */
-    <div className="text">
-      <div className="icons">
-        <i className="fa fa-id-card" aria-hidden="true"></i>
-      </div>
-      <TextField
-        fullWidth={props.fullWidth}
-        multiline={props.multiline}
-        type={props.type}
-        id={props.id}
-        name={props.name}
-        label={props.label}
-        variant={props.variant}
-        required={props.required}
-      />
-      <div className="icons">
+    <div className="text-question">
+      <div className="text">
+        <div className="icons">
+          {icon.left ? <i className={icon.left} aria-hidden="true"></i> : null}
+        </div>
+        <TextField
+          type={props.type}
+          name={props.name}
+          label={props.label}
+          id={props.id}
+          fullWidth={props.fullWidth}
+          multiline={props.multiline}
+          variant={props.variant}
+          helperText={props.helperText}
+          required={props.required}
+          onChange={onSelectChange}
+          value={value}
+        />
+        <div className="icons">
+          {icon.right ? (
+            <i className={icon.right} aria-hidden="true"></i>
+          ) : null}
+        </div>
         <i
           onClick={handleClick("top-start")}
           className="fa fa-question-circle"
@@ -54,7 +67,7 @@ export default function ({ helpTitle, helpText, ...props }) {
               </Paper>
             </Fade>
           )}
-        </Popper>
+        </Popper>{" "}
       </div>
     </div>
   );

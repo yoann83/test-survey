@@ -18,32 +18,35 @@ export const surveyJson = {
           elements: [
             {
               type: "text",
-              name: "textquestions",
-              title: "Text -> inputype : text",
               inputType: "text",
+              name: "textquestions",
+              title: "Title Survey",
+              defaultValue: "Valeur Default Survey",
+              description: "Description de Survey",
               titleLocation: "hidden",
               isRequired: true
             },
             {
               type: "text",
+              inputType: "number",
               name: "numberquestion",
               title: "Number  -> inputype: number",
-              inputType: "number",
               titleLocation: "hidden",
               isRequired: false,
               hideNumber: true
             },
             {
               type: "text",
+              inputType: "comment",
               name: "textmultiquestions",
               title: "Multiline -> inputype : comment",
-              inputType: "comment",
               titleLocation: "hidden",
               multiline: true,
               isRequired: true
             },
             {
               type: "dropdown",
+              inputType: "dropdown",
               name: "selectquestions",
               title: "Select",
               hasNone: true,
@@ -53,16 +56,17 @@ export const surveyJson = {
             },
             {
               type: "comment",
+              inputType: "text",
               name: "comments",
               title: "Comments",
-              inputType: "text",
               titleLocation: "hidden",
               hideNumber: true
             },
             {
               type: "boolean",
-              title: "Boolean",
+              inputType: "boolean",
               name: "booleanquestion",
+              title: "Boolean",
               labelTrue: "Mr.",
               labelFalse: "Mrs.",
               indent: 3,
