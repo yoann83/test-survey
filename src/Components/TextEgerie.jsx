@@ -5,7 +5,7 @@ import Fade from "@mui/material/Fade";
 import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 
-export default function ({ inputType, name, title, onChange, ...props }) {
+export default function ({ helpTitle, helpText, ...props }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState();
@@ -13,14 +13,6 @@ export default function ({ inputType, name, title, onChange, ...props }) {
     setAnchorEl(event.currentTarget);
     setOpen((prev) => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
-    setTimeout(() => {
-      setOpen((prev) => placement !== newPlacement || !prev);
-    }, 3000);
-  };
-  const [value, setValue] = useState("");
-  const onSelectChange = (e) => {
-    setValue(e.target.value);
-    onChange(e.target.value);
   };
   return (
     /* construct (overloard) all components (ex : material ui) */
@@ -29,20 +21,21 @@ export default function ({ inputType, name, title, onChange, ...props }) {
         <i className="fa fa-id-card" aria-hidden="true"></i>
       </div>
       <TextField
-        fullWidth
-        {...props}
-        onChange={onSelectChange}
-        value={value}
-        multiline={inputType === "comment" ? true : false}
+        fullWidth={props.fullWidth}
+        multiline={props.multiline}
+        type={props.type}
+        id={props.id}
+        name={props.name}
+        label={props.label}
+        variant={props.variant}
+        required={props.required}
       />
-
       <div className="icons">
         <i
           onClick={handleClick("top-start")}
           className="fa fa-question-circle"
           aria-hidden="true"
         ></i>
-
         <Popper
           open={open}
           anchorEl={anchorEl}
@@ -50,13 +43,13 @@ export default function ({ inputType, name, title, onChange, ...props }) {
           transition
         >
           {({ TransitionProps }) => (
-            <Fade {...TransitionProps} timeout={350}>
+            <Fade {...TransitionProps} timeout={1000}>
               <Paper>
                 <Typography className="popper" sx={{ p: 2 }}>
                   <span className="h5">
-                    The content of the <dfn>{name}</dfn>
+                    <dfn>{helpTitle}</dfn>
                   </span>
-                  <span className="text">Text textField help here...</span>
+                  <span className="text">{helpText}</span>
                 </Typography>
               </Paper>
             </Fade>
