@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactQuestionFactory } from "survey-react";
 import PropTypes from "prop-types";
-import TextEgerie from "../../../TextEgerie";
+import TextEgerie from "../../../TextField";
 
 /* style Overload */
 import "../../scss/sassForm/_Text.scss";
