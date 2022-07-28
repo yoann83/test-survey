@@ -1,10 +1,10 @@
 import React from "react";
 import { ReactQuestionFactory } from "survey-react";
 import PropTypes from "prop-types";
-import TextEgerie from "../../../../TextEgerie";
+import TextEgerie from "../../../TextEgerie";
 
 /* style Overload */
-import "../../../scss/sassForm/_questionText.scss";
+import "../../scss/sassForm/_Text.scss";
 
 export default function Text(props) {
   return (
@@ -31,7 +31,7 @@ export default function Text(props) {
             variant={props.question.variant}
             required={props.question.isRequired}
             defaultValue={props.question.defaultValue}
-            helperText={props.question.description}
+            description={props.question.description}
             icon={{
               left: "fa fa-id-card"
               //right: "fab fa-audible"
@@ -64,7 +64,6 @@ TextEgerie.propTypes = {
   multiline: PropTypes.bool,
   id: PropTypes.string,
   description: PropTypes.string,
-  helperText: PropTypes.string,
   defaultValue: PropTypes.string,
   icon: PropTypes.object,
   variant: PropTypes.string,

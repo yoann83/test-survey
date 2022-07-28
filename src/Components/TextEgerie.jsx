@@ -5,7 +5,14 @@ import Fade from "@mui/material/Fade";
 import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 
-export default function ({ helpTitle, helpText, icon, onChange, ...props }) {
+export default function ({
+  helpTitle,
+  helpText,
+  description,
+  icon,
+  onChange,
+  ...props
+}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState();
@@ -14,7 +21,7 @@ export default function ({ helpTitle, helpText, icon, onChange, ...props }) {
     setOpen((prev) => placement !== newPlacement || !prev);
     setPlacement(newPlacement);
   };
-  const [value, setValue] = useState(props.defaultValue);
+  const [value, setValue] = useState();
   const onSelectChange = (e) => {
     setValue(e.target.value);
     onChange(e.target.value);
@@ -22,6 +29,7 @@ export default function ({ helpTitle, helpText, icon, onChange, ...props }) {
   return (
     /* construct (overloard) all components (ex : material ui) */
     <div className="text-question">
+      <p>{description}</p>
       <div className="text">
         <div className="icons">
           {icon.left ? <i className={icon.left} aria-hidden="true"></i> : null}
@@ -33,11 +41,11 @@ export default function ({ helpTitle, helpText, icon, onChange, ...props }) {
           id={props.id}
           fullWidth={props.fullWidth}
           multiline={props.multiline}
-          variant={props.variant}
           helperText={props.helperText}
           required={props.required}
+          variant="outlined"
+          placeholder={value ? value : props.defaultValue}
           onChange={onSelectChange}
-          value={value}
         />
         <div className="icons">
           {icon.right ? (
@@ -67,7 +75,7 @@ export default function ({ helpTitle, helpText, icon, onChange, ...props }) {
               </Paper>
             </Fade>
           )}
-        </Popper>{" "}
+        </Popper>
       </div>
     </div>
   );

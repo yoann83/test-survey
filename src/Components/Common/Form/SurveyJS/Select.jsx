@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { ReactQuestionFactory } from "survey-react";
-import TextareaAutosize from "@mui/base/TextareaAutosize";
+import SelectField from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Fade from "@mui/material/Fade";
 import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
-
 /* style Overload */
-import "../../../scss/sassForm/_questionTextarea.scss";
+import "../../scss/sassForm/_Select.scss";
 
-export default function Textarea(props) {
+export default function Select(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
@@ -23,10 +25,11 @@ export default function Textarea(props) {
     }, 3000);
   };
 
-  const handleChangeValue = (e) => {
+  const [choice, setchoice] = useState("");
+  const onSelectChange = (e) => {
+    setchoice(e.target.value);
     props.question.setValueCore(e.target.value);
   };
-
   return (
     <div>
       {props.isDisplayMode ? (
@@ -40,23 +43,29 @@ export default function Textarea(props) {
         </div>
       ) : (
         /* construct (overloard) all components (ex : material ui) */
-        <div className="textarea-question">
-          <div className="textarea">
-            <TextareaAutosize
-              minRows={2}
-              maxRows={8}
-              name={props.question.name}
-              placeholder={props.question.title}
-              variant={props.question.variant}
-              onChange={handleChangeValue}
-            />
+        <div className="select-question">
+          <div className="select">
+            <FormControl required={props.question.isRequired} fullWidth>
+              <InputLabel>{props.question.title}</InputLabel>
+              <SelectField
+                fullWidth
+                id={props.question.inputId}
+                value={choice}
+                onChange={onSelectChange}
+              >
+                {props.question.choices.map((c) => (
+                  <MenuItem key={c.value} value={c.value}>
+                    {c.value}
+                  </MenuItem>
+                ))}
+              </SelectField>
+            </FormControl>
             <div className="icons">
               <i
                 onClick={handleClick("top-start")}
                 className="fa fa-question-circle"
                 aria-hidden="true"
               ></i>
-
               <Popper
                 open={open}
                 anchorEl={anchorEl}
@@ -71,7 +80,7 @@ export default function Textarea(props) {
                           The content of the <dfn>{props.question.name}</dfn>
                         </span>
                         <span className="text">
-                          Text textField help here...
+                          Text selectField help here...
                         </span>
                       </Typography>
                     </Paper>
@@ -89,6 +98,6 @@ export default function Textarea(props) {
   );
 }
 /* only overload original type ("text", "dropdown" ...) and uncomment scss */
-ReactQuestionFactory.Instance.registerQuestion("comment", (props) => {
-  return React.createElement(Textarea, props);
+ReactQuestionFactory.Instance.registerQuestion("dropdown", (props) => {
+  return React.createElement(Select, props);
 });
